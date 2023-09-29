@@ -1,14 +1,19 @@
 
-fetchKantoPokemon();
+fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0').then(response => response.json() ).then(user => 
+{
+  const count=user.count;
+  console.log(count);
+
+  fetchKantoPokemon();
 
 function fetchKantoPokemon(){
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+    fetch('https://pokeapi.co/api/v2/pokemon?limit='+count)
     .then(response => response.json())
     .then(function(allpokemon){
         allpokemon.results.forEach(function(pokemon){
             fetchPokemonData(pokemon);
         })
-    })
+  })
 }
 function fetchPokemonData(pokemon){
     let url = pokemon.url // <--- this is saving the pokemon url to a variable to use in the fetch.
@@ -28,7 +33,7 @@ function renderPokemon(pokeData){
     poke.append(pokeName);
    allPokemonContainer.append(poke);
 }
-
+});
 function mySearch() {
   var input, filter, ul, li, a, i;
   input = document.getElementById("myF");
@@ -44,4 +49,3 @@ function mySearch() {
     }
   }
 }
-
